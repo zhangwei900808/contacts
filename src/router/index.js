@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Hello from '@/components/Hello'
+import RouterView from '@/components/RouterView'
 
 Vue.use(Router)
 
@@ -8,8 +8,18 @@ export default new Router({
   routes: [
     {
       path: '/',
-      name: 'Hello',
-      component: Hello
+      name: 'main',
+      component: function (resolve) {
+        require(['@/pages/Main'], resolve)
+      },
+      children:[
+        {
+          path:'test',
+          component: function (resolve) {
+            require(['@/pages/Main'], resolve)
+          }
+        }
+      ]
     }
   ]
 })
