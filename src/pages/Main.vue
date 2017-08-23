@@ -1,10 +1,14 @@
 <template>
-    <section class="main-container">
-        main
+    <section class="container main-container">
+        <ContactList></ContactList>
     </section>
 </template>
 <script>
+    import ContactList from '@/components/ContactList'
     export default{
+        components:{
+            ContactList
+        },
         data(){
             return{
 
