@@ -11,15 +11,16 @@ export default new Router({
       name: 'main',
       component: function (resolve) {
         require(['@/pages/Main'], resolve)
-      },
-      children:[
-        {
-          path:'test',
-          component: function (resolve) {
-            require(['@/pages/Main'], resolve)
-          }
-        }
-      ]
-    }
+      }
+    },
+    {
+      path:'/login',
+      component: function (resolve) {
+        require(['@/pages/Login'], resolve)
+      }
+    },
+    { path: '*', component: function (resolve) {
+      require(['@/pages/NotFound'], resolve)
+    } }
   ]
 })

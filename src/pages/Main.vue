@@ -1,7 +1,6 @@
 <template>
     <section class="main-container">
-        sdfg
-        <router-view></router-view>
+        main
     </section>
 </template>
 <script>
