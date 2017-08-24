@@ -1,33 +1,20 @@
 <template>
-<div class="contact-list-container">
-  <div class="row">
-    <div class="col-md-4">
-      <b-form-fieldset horizontal label="查询" :label-cols="2">
-        <b-form-input v-model="filter" placeholder="请输入查询内容" />
-      </b-form-fieldset>
+    <div class="container contact-list-container">
+        <div class="row">
+            <div class="col-md-4">
+            <b-form-fieldset horizontal label="查询" :label-cols="2">
+                <b-form-input v-model="filter" placeholder="请输入查询内容" />
+            </b-form-fieldset>
+            </div>
+        </div>
+        <b-table striped hover show-empty
+                :items="contacts"
+                :fields="fields"
+                :filter="filter"
+                @filtered="onFiltered">
+            <template slot="name" scope="row">{{row.value.first}} {{row.value.last}}</template>
+        </b-table>
     </div>
-  </div>
-
-  <b-table striped hover show-empty
-           :items="contacts"
-           :fields="fields"
-           :filter="filter"
-           :sort-by.sync="sortBy"
-           :sort-desc.sync="sortDesc"
-           @filtered="onFiltered">
-    <template slot="name" scope="row">{{row.value.first}} {{row.value.last}}</template>
-    <template slot="isActive" scope="row">{{row.value?'Yes :)':'No :('}}</template>
-    <template slot="actions" scope="row">
-      <b-btn size="sm" @click.stop="details(row.item,row.index,$event.target)">Details</b-btn>
-    </template>
-  </b-table>
-
-  <b-modal id="modal1" @hide="resetModal" ok-only>
-    <h4 class="my-1 py-1" slot="modal-header">Index: {{ modalDetails.index }}</h4>
-    <pre>{{ modalDetails.data }}</pre>
-  </b-modal>
-
-</div>
 </template>
 
 <script>
@@ -36,6 +23,14 @@ import { mapState,mapActions } from 'vuex'
 export default {
   data() {
     return{
+        items: [{
+            text: '首页',
+            href: '/',
+            }, {
+            text: '联系人管理',
+            href: '#',
+            active: true
+        }],
         fields: {
             fullName: { label: '姓名','class': 'text-center'},
             email: { label: '邮箱' },
@@ -77,6 +72,5 @@ export default {
 
 <style lang="less">
     .contact-list-container{
-        margin-top:100px;
     }
 </style>

@@ -14,12 +14,12 @@ const store = new Vuex.Store({
     state:{
       isLogin:false,
       userInfo:{
-        name:'zhangwei',
-        password:'123'
+        name:'',
+        password:''
       }
     },
     mutations:{
-     
+      //todo:登录
     },
     actions:{
       

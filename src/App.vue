@@ -1,12 +1,11 @@
 <template>
   <div id="app">
       <Layout></Layout>
-      <router-view></router-view>
   </div>
 </template>
 
 <script>
-import Layout from '@/components/Layout'
+import Layout from '@/pages/Layout'
 
 export default {
   name: 'app',
@@ -22,5 +21,6 @@ export default {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: #2c3e50;
+  background-color:#f5f5f5 !important;
 }
 </style>

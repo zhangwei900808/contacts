@@ -1,7 +1,7 @@
 <template>
     <section class="not-found-container">
-        <h1>404</h1>
-        <p>对不起，没有找到你想要的页面</p>
+        <h1>关于</h1>
+        <p>Team247联系人管理系统</p>
     </section>
 </template>
 <script>
