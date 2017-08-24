@@ -23,14 +23,6 @@ import { mapState,mapActions } from 'vuex'
 export default {
   data() {
     return{
-        items: [{
-            text: '首页',
-            href: '/',
-            }, {
-            text: '联系人管理',
-            href: '#',
-            active: true
-        }],
         fields: {
             fullName: { label: '姓名','class': 'text-center'},
             email: { label: '邮箱' },
@@ -47,7 +39,7 @@ export default {
         contacts:state=>state.ContactList.contacts
     })
   },
-  mounted(){
+  created(){
       this.getContacts();
   },
   methods: {

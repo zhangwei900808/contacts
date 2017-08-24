@@ -51,11 +51,11 @@
         box-sizing:border-box;
     }
     .left-250{
-        left:250px !important;
+        left:250px;
     }
     @media screen and (max-width: 960px) {
         main {
-            left:0;
+            left:0 !important;
         }
     }
 </style>

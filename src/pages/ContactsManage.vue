@@ -12,14 +12,17 @@
         },
         data(){
             return{
-                items: [{
-                    text: '首页',
-                    to: '/',
-                    }, {
-                    text: '联系人管理',
-                    to: '#',
-                    active: true
-                }],
+                items: [
+                    {
+                        text: '首页',
+                        to: '/',
+                    }, 
+                    {
+                        text: '联系人管理',
+                        to: '#',
+                        active: true
+                    }
+                ],
             }
         },
         created(){
