@@ -12,7 +12,7 @@
                     <b-form-group label="密码:" label-for="password">
                         <b-form-input 
                                     id="password"
-                                    type="text" v-model="form.name" required
+                                    type="password" v-model="form.password" required
                                     placeholder="密码"
                         ></b-form-input>
                     </b-form-group>
@@ -24,23 +24,36 @@
     </section>
 </template>
 <script>
-    export default{
-        data() {
-            return{
-                form: {
-                    name: '',
-                    password: null,
-                    secret: 'S3CR3T'
-                }
-            }
-        },
-        methods: {
-            onSubmit(evt) {
-                evt.preventDefault();
-                alert(JSON.stringify(this.form));
+import { mapState,mapActions } from 'vuex'
+
+export default{
+    data() {
+        return{
+            form: {
+                name: '',
+                password: ''
             }
         }
+    },
+    computed:{
+        ...mapState([
+            'userInfo',
+            'isLogin'
+        ])
+    },
+    methods: {
+        ...mapActions([
+            'setLoginInfo',
+            'setIsLogin'
+        ]),
+        onSubmit(evt) {
+            evt.preventDefault();
+            this.setLoginInfo(this.form);
+            this.setIsLogin(true);
+            this.$router.push('/')
+        }
     }
+}
 </script>
 <style lang="less">
     .login-container{

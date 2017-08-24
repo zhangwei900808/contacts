@@ -14,10 +14,10 @@
             return{
                 items: [{
                     text: '首页',
-                    href: '/',
+                    to: '/',
                     }, {
                     text: '联系人管理',
-                    href: '#',
+                    to: '#',
                     active: true
                 }],
             }

@@ -8,7 +8,7 @@ let router = new Router({
   routes: [
       {
         path: '/',
-        name: 'main',
+        name: 'index',
         meta: {
             requireAuth: true,
         },
