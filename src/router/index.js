@@ -18,13 +18,25 @@ let router = new Router({
       },
       {
         path:'/contactsManage',
-        name:'contactsManage',
         meta: {
             requireAuth: true,
         },
-        component: function (resolve) {
-          require(['@/pages/ContactsManage'], resolve)
-        }
+        component:require('@/components/RouterView'),
+        children:[
+          {
+            path:'/',
+            name:'contactsManage',
+            component: function (resolve) {
+              require(['@/pages/contactsManage/ContactsManage'], resolve)
+            },
+          },
+          {
+            path:'addContact',
+            component: function (resolve) {
+              require(['@/pages/contactsManage/EditContact'], resolve)
+            },
+          }
+        ]
       },
       {
         path:'/login',
@@ -51,6 +63,7 @@ let router = new Router({
 })
 
 router.beforeEach((to, from, next) => {
+  // 检测是否要跳转到登录页面
   if (to.matched.some(r => r.meta.requireAuth)) {
       if (!store.state.isLogin) {
          return next('/login');

@@ -53,7 +53,7 @@
     .left-250{
         left:250px;
     }
-    @media screen and (max-width: 960px) {
+    @media screen and (max-width: 991px) {
         main {
             left:0 !important;
         }

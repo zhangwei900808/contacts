@@ -35,8 +35,21 @@
 </script>
 <style lang="less">
     .contactsManage-container{
+        position:relative;
+        margin-top:61px;
+        z-index:10;
         .b-breadcrumb{
             border-radius:0;
+            position:fixed;
+            top:56px;
+            right:0;
+            left:250px;
+            z-index:99;
+        }
+    }
+    @media screen and (max-width: 991px) {
+        .b-breadcrumb {
+            left:0 !important;
         }
     }
 </style>

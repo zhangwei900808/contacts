@@ -17,16 +17,16 @@
     .sidebar-container{
         display:block;
         width:250px;
-        position:absolute;
+        position:fixed;
         left:0;
         top:0;
         bottom:0;
         border-right:1px solid #ccc;
-        padding-top:100px;
+        padding-top:115px;
         .menu-out{
             background-color:#e9ecef;
             position:absolute;
-            top:55px;
+            top:56px;
             left:0;
             right:0;
             color:#868e96;
@@ -40,7 +40,7 @@
             }
         }
     }
-    @media screen and (max-width: 960px) {
+    @media screen and (max-width: 991px) {
         .sidebar-container {
             display:none;
         }

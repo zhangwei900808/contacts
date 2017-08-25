@@ -1,19 +1,25 @@
 <template>
     <div class="container contact-list-container">
-        <div class="row">
-            <div class="col-md-4">
-            <b-form-fieldset horizontal label="查询" :label-cols="2">
-                <b-form-input v-model="filter" placeholder="请输入查询内容" />
-            </b-form-fieldset>
+        <div class="row row-bottom">
+            <div class="col-auto">
+                <b-button variant="primary" @click="onAddContact">添加</b-button>
             </div>
         </div>
-        <b-table striped hover show-empty
-                :items="contacts"
-                :fields="fields"
-                :filter="filter"
-                @filtered="onFiltered">
-            <template slot="name" scope="row">{{row.value.first}} {{row.value.last}}</template>
-        </b-table>
+        <div class="row">
+            <div class="col-12">
+                <b-table 
+                    striped 
+                    hover 
+                    bordered
+                    show-empty
+                    responsive
+                    :items="contacts"
+                    :fields="fields"
+                    :filter="filter"
+                    @filtered="onFiltered">
+                </b-table>
+            </div>
+        </div>
     </div>
 </template>
 
@@ -24,7 +30,8 @@ export default {
   data() {
     return{
         fields: {
-            fullName: { label: '姓名','class': 'text-center'},
+            index:{label:'#'},
+            fullName: { label: '姓名'},
             email: { label: '邮箱' },
             description: { label: '简介' }
         },
@@ -57,6 +64,9 @@ export default {
     },
     onFiltered(filteredItems) {
       
+    },
+    onAddContact(){
+        this.$router.push('/contactsManage/addContact')
     }
   }
 }
@@ -64,5 +74,8 @@ export default {
 
 <style lang="less">
     .contact-list-container{
+        .row-bottom{
+            margin-bottom:15px;
+        }
     }
 </style>
