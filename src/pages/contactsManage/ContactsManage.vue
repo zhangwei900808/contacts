@@ -24,12 +24,6 @@
                     }
                 ],
             }
-        },
-        created(){
-
-        },
-        methods:{
-
         }
     }
 </script>
