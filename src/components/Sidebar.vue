@@ -4,9 +4,9 @@
             <span class="title">导航菜单</span>
         </div>
         <b-nav vertical class="w-250">
-            <b-nav-item class="b-nav-item" to="/">首页</b-nav-item>
-            <b-nav-item class="b-nav-item" to="/contactsManage">联系人管理</b-nav-item>
-            <b-nav-item class="b-nav-item" to="/about">关于</b-nav-item>
+            <b-nav-item class="b-nav-item" to="/"><img :src="require('@/assets/ic_home_black_24dp_1x.png')">首页</b-nav-item>
+            <b-nav-item class="b-nav-item" to="/contactsManage"><img :src="require('@/assets/ic_group_black_24dp_1x.png')">联系人管理</b-nav-item>
+            <b-nav-item class="b-nav-item" to="/about"><img :src="require('@/assets/ic_mood_black_24dp_1x.png')">关于</b-nav-item>
         </b-nav>
     </section>
 </template>
@@ -34,7 +34,10 @@
         }
 
         .b-nav-item{
-            padding-left:15px;
+            padding-left:0;
+            img{
+                padding-right:10px;
+            }
             &:hover{
                 background-color:#e9ecef;
             }
