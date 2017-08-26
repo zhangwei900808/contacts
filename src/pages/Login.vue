@@ -9,12 +9,11 @@
                             <b-form-input id="username"
                                         type="text" 
                                         v-model.trim="form.name" 
-                                        required
                                         :state="nameState"
                                         placeholder="用户名"
                             ></b-form-input>
                             <b-form-feedback>
-                                请输入至少3个字符
+                                请输入至少2个字符
                             </b-form-feedback>
                         </b-form-group>
                         <b-form-group label="密码:" label-for="password">
@@ -23,7 +22,6 @@
                                         type="password" 
                                         :state="passwordState"
                                         v-model.trim="form.password" 
-                                        required
                                         placeholder="密码"
                             ></b-form-input>
                             <b-form-feedback>
@@ -31,7 +29,7 @@
                             </b-form-feedback>
                         </b-form-group>
                         <b-button type="submit" variant="primary" class="col-lg-auto col-sm-auto">提交</b-button>
-                        <b-button type="reset" variant="light" class="col-lg-auto col-sm-auto">重置</b-button>
+                        <b-button type="reset" @click.stop="clearForm" variant="light" class="col-lg-auto col-sm-auto">重置</b-button>
                     </b-form>
                     </b-card>
                 </b-card-group>
@@ -65,9 +63,9 @@ export default{
             'setIsLogin'
         ]),
         validateForm(){
-            if(this.form.name.length > 2){
+            if(this.form.name.length >=2){
                 this.nameState = null;
-                if(this.form.password.length>5){
+                if(this.form.password.length>=5){
                     this.passwordState = null;
                     return true;
                 }else{
@@ -88,6 +86,12 @@ export default{
                 this.$router.push('/');
             }
             
+        },
+        clearForm(){
+            this.form ={
+                name:'',
+                password:''
+            }
         }
     }
 }
