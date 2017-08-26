@@ -13,11 +13,6 @@
     import Navbar from '@/components/Navbar'
 
     export default{
-        data(){
-            return{
-                
-            }
-        },
         components:{
             Sidebar,
             Navbar
@@ -32,11 +27,6 @@
             ...mapState([
                 'isLogin',
                 'userInfo'
-            ])
-        },
-        methods:{
-            ...mapActions([
-                
             ])
         }
     }
