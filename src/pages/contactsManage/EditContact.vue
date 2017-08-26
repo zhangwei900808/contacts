@@ -5,7 +5,7 @@
        <section class="container">
             <div class="row">
                 <div class="col-xl-5 col-lg-6 col-md-12 col-sm-12 col-12 mr-auto">
-                    <b-alert variant="success" :show="alertShow">添加成功</b-alert>
+                    <b-alert variant="success" :show="alertShow">保存成功</b-alert>
                     <b-card-group deck>
                         <b-card header="联系人信息"
                                 header-tag="header">
@@ -14,7 +14,6 @@
                                     <b-form-input id="firstName"
                                                 type="text" 
                                                 v-model.trim="form.first_name" 
-                                                required
                                                 :state="firstNameState"
                                                 placeholder="输入姓"
                                     ></b-form-input>
@@ -27,7 +26,6 @@
                                                 type="text" 
                                                 :state="lastNameState"
                                                 v-model.trim="form.last_name" 
-                                                required
                                                 placeholder="输入名"
                                     ></b-form-input>
                                     <b-form-feedback>
@@ -39,7 +37,6 @@
                                                 type="email" 
                                                 :state="emailState"
                                                 v-model.trim="form.email" 
-                                                required
                                                 placeholder="输入邮箱"
                                     ></b-form-input>
                                     <b-form-feedback>
@@ -47,13 +44,11 @@
                                     </b-form-feedback>
                                 </b-form-group>
                                 <b-form-group label="简介:" label-for="introduction">
-                                    <b-form-textarea id="introduction"
-                                        v-model="form.description"
-                                        placeholder="输入简介"
-                                        required
-                                        :rows="3"
-                                        :max-rows="6">
-                                    </b-form-textarea>
+                                    <b-form-input id="introduction"
+                                                :state="descriptionState"
+                                                v-model.trim="form.description"
+                                                placeholder="输入简介">
+                                    </b-form-input>
                                     <b-form-feedback>
                                         请输入至少1个字符
                                     </b-form-feedback>
@@ -75,12 +70,14 @@
     export default{
         data(){
             return {
+                id:0,
                 alertShow:false,
                 firstNameState:null,
                 lastNameState:null,
                 emailState:null,
                 descriptionState:null,
                 form: {
+                    id:'',
                     first_name:'',
                     last_name:'',
                     email: '',
@@ -103,20 +100,36 @@
                 ],
             }
         },
+        created(){
+            this.id = this.$route.params.id;
+            //根据id来判断是添加还是更新
+            if(this.id){
+                this.getContactByAxios();
+            }
+        },
         methods: {
             ...mapActions([
-                'addContact'
+                'addContact',
+                'getContactById',
+                'updateContactById'
             ]),
+            // 验证表单
             validateForm(){
                 if(this.form.first_name.length>=1){
                     this.firstNameState = null;
                     if(this.form.last_name.length >= 1){
                         this.lastNameState = null;
-                        if(this.form.description.length >= 1){
-                            this.descriptionState=null;
-                            return true;
+                        if(this.form.email.length>=1){
+                            this.emailState = null;
+                            if(this.form.description.length >= 1){
+                                this.descriptionState=null;
+                                return true;
+                            }else{
+                                this.descriptionState='invalid'
+                                return false;
+                            }
                         }else{
-                            this.descriptionState='invalid'
+                            this.emailState = 'invalid';
                             return false;
                         }
                     }else{
@@ -130,20 +143,50 @@
             },
             onSubmit(evt) {
                 evt.preventDefault();
-                if(this.validateForm()){
-                    console.log('contact before submit')          
-                    console.log(this.form)      
-                    this.addContact({
-                        contact:this.form,
-                        //添加成功产生的回调函数
-                        success:()=>{
-                            this.alertShow = true;
-                            setTimeout(()=>{
-                                this.alertShow=false;
-                            },5000)
-                        }
-                    });                    
+                if(this.validateForm()){     
+                    // 更新
+                    if(this.id){
+                        this.updateContactById({
+                            contact:this.form,
+                            //添加成功产生的回调函数
+                            success:()=>{
+                                this.alertShow = true;
+                                setTimeout(()=>{
+                                    this.alertShow=false;
+                                },5000)
+                            }
+                        })
+                    } 
+                    // 添加
+                    else{
+                        this.addContact({
+                            contact:this.form,
+                            //添加成功产生的回调函数
+                            success:()=>{
+                                this.alertShow = true;
+                                setTimeout(()=>{
+                                    this.alertShow=false;
+                                },5000)
+                            }
+                        });         
+                    }
+                    this.form = {
+                        id:'',
+                        first_name:'',
+                        last_name:'',
+                        email: '',
+                        description: '',
+                    }        
                 }
+            },
+            getContactByAxios(){
+                this.getContactById({
+                    id:this.id,
+                    //获取联系人成功后，执行回调函数
+                    success:(contact)=>{
+                        this.form = contact;                
+                    }
+                });
             },
             onBack(){
                 this.$router.push('/contactsManage')
