@@ -12,7 +12,8 @@ export default {
                 .then((res)=>{
                     obj.success()
                 }).catch((err)=>{
-                    console.log(`msg:${err}`)
+                    console.log(`msg:${err}`);
+                    obj.error(err);
                 })
         },
         // 根据联系人id更新联系人信息
@@ -22,7 +23,10 @@ export default {
                 obj.success();
             })
             .catch((err)=>{
-                console.log(`msg:${err}`)
+                console.log(`msg:${err}`);
+                if(obj.error){
+                    obj.error(err);
+                }
             })
         },
         // 根据联系人id获取联系人信息
@@ -34,18 +38,22 @@ export default {
                 obj.success(res.data);
             })
             .catch((err)=>{
-                console.log(`msg:${err}`)
+                console.log(`msg:${err}`);
+                obj.error(err);
             })
         },
         // 获取所有联系人信息
-        [types.GET_ALL_CONTACT_LIST](state){
+        [types.GET_ALL_CONTACT_LIST](state,obj){
             axios.get('http://localhost:8089/contacts')
                 .then((res)=>{  
                     console.log(res.data);
                     state.contacts = res.data;
                 })
                 .catch((err)=>{
-                    console.log(`msg:${err}`)
+                    console.log(`msg:${err}`);
+                    if(obj.error){
+                        obj.error(err);
+                    }
                 })
         },
         // 添加联系人
@@ -55,7 +63,8 @@ export default {
                     obj.success();
                 })
                 .catch((err)=>{
-                    console.log(`msg:${err}`)
+                    console.log(`msg:${err}`);
+                    obj.error(err);
                 })
         }
     },
@@ -63,8 +72,8 @@ export default {
         getContactById(context,obj){
             context.commit(types.GET_CONTACT_BY_ID,obj);
         },
-        getContacts(context){
-            context.commit(types.GET_ALL_CONTACT_LIST);
+        getContacts(context,obj){
+            context.commit(types.GET_ALL_CONTACT_LIST,obj);
         },
         addContact(context,obj){
             context.commit(types.ADD_CONTACT,obj);

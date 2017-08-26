@@ -5,7 +5,7 @@
        <section class="container">
             <div class="row">
                 <div class="col-xl-5 col-lg-6 col-md-12 col-sm-12 col-12 mr-auto">
-                    <b-alert variant="success" :show="alertShow">保存成功</b-alert>
+                    <b-alert :variant="alert.variant" :show="alert.show">{{alert.title}}</b-alert>
                     <b-card-group deck>
                         <b-card header="联系人信息"
                                 header-tag="header">
@@ -71,7 +71,11 @@
         data(){
             return {
                 id:0,
-                alertShow:false,
+                alert:{
+                    title:'',
+                    show:false,
+                    variant:''
+                },
                 firstNameState:null,
                 lastNameState:null,
                 emailState:null,
@@ -150,9 +154,19 @@
                             contact:this.form,
                             //添加成功产生的回调函数
                             success:()=>{
-                                this.alertShow = true;
+                                this.alert.show = true;
+                                this.alert.title ='更新成功';
+                                this.alert.variant = 'success';
                                 setTimeout(()=>{
-                                    this.alertShow=false;
+                                    this.alert.show=false;
+                                },5000)
+                            },
+                            error:(msg)=>{
+                                this.alert.show = true;
+                                this.alert.title ='服务器无响应，请检查您的服务器是否运行正常';
+                                this.alert.variant = 'danger';
+                                setTimeout(()=>{
+                                    this.alert.show=false;
                                 },5000)
                             }
                         })
@@ -163,9 +177,19 @@
                             contact:this.form,
                             //添加成功产生的回调函数
                             success:()=>{
-                                this.alertShow = true;
+                                this.alert.show = true;
+                                this.alert.title ='添加成功';
+                                this.alert.variant = 'success';
                                 setTimeout(()=>{
-                                    this.alertShow=false;
+                                    this.alert.show=false;
+                                },5000)
+                            },
+                            error:(msg)=>{
+                                this.alert.show = true;
+                                this.alert.title ='服务器无响应，请检查您的服务器是否运行正常';
+                                this.alert.variant = 'danger';
+                                setTimeout(()=>{
+                                    this.alert.show=false;
                                 },5000)
                             }
                         });         
@@ -185,6 +209,14 @@
                     //获取联系人成功后，执行回调函数
                     success:(contact)=>{
                         this.form = contact;                
+                    },
+                    error:(msg)=>{
+                        this.alert.show = true;
+                        this.alert.title ='服务器无响应，请检查您的服务器是否运行正常';
+                        this.alert.variant = 'danger';
+                        setTimeout(()=>{
+                            this.alert.show=false;
+                        },5000)
                     }
                 });
             },

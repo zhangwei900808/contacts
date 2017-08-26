@@ -1,5 +1,10 @@
 <template>
     <div class="container contact-list-container">
+        <div class="row">
+            <div class="col-12 col-xl-8 col-lg-8 col-md-8 col-sm-8">
+                <b-alert :variant="alert.variant" :show="alert.show">{{alert.title}}</b-alert>
+            </div>
+        </div>
         <div class="row row-bottom">
             <div class="col-auto">
                 <b-button variant="primary" @click="addContact">添加</b-button>
@@ -48,6 +53,11 @@ import { mapState,mapActions } from 'vuex'
 export default {
   data() {
     return{
+        alert:{
+                title:'',
+                show:false,
+                variant:''
+             },
         deleteModal:{
             show:false,
             id:0,
@@ -70,7 +80,16 @@ export default {
     })
   },
   created(){
-      this.getContacts();
+      this.getContacts({
+          error:()=>{
+            this.alert.show = true;
+            this.alert.title ='服务器无响应，请检查您的服务器是否运行正常';
+            this.alert.variant = 'danger';
+            setTimeout(()=>{
+                this.alert.show=false;
+            },5000)
+          }
+      });
   },
   methods: {
       ...mapActions([
@@ -96,10 +115,27 @@ export default {
         this.deleteContactById({
             id:this.deleteModal.id,
             success:()=>{
-                this.getContacts();
+                this.getContacts({
+                    error:()=>{
+                        this.alert.show = true;
+                        this.alert.title ='服务器无响应，请检查您的服务器是否运行正常';
+                        this.alert.variant = 'danger';
+                        setTimeout(()=>{
+                            this.alert.show=false;
+                        },5000)
+                    }
+                });
                 this.deleteModal.show = false;
                 //解决bootstrap b-modal显示问题
                 this.deleteModal.showClass = false;
+            },
+            error:(msg)=>{
+                this.alert.show = true;
+                this.alert.title ='服务器无响应，请检查您的服务器是否运行正常';
+                this.alert.variant = 'danger';
+                setTimeout(()=>{
+                    this.alert.show=false;
+                },5000)
             }
         })
         return e.cancel();
