@@ -32,6 +32,18 @@ let router = new Router({
           },
           {
             path:'addContact',
+            meta: {
+                requireAuth: true,
+            },
+            component: function (resolve) {
+              require(['@/pages/contactsManage/EditContact'], resolve)
+            },
+          },
+          {
+            path:'editContact/:id',
+            meta: {
+                requireAuth: true,
+            },
             component: function (resolve) {
               require(['@/pages/contactsManage/EditContact'], resolve)
             },
